@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/headline/*")
 public class NewsHeadlineController extends BaseController {
@@ -31,6 +33,36 @@ public class NewsHeadlineController extends BaseController {
         NewsHeadline newsHeadline = WebUtil.readJson(req, NewsHeadline.class);
         newsHeadline.setPublisher(userId.intValue());
         headlineService.addNewsHeadline(newsHeadline);
+        WebUtil.writeJson(resp, Result.ok(null));
+    }
+
+    /**
+     * 修改头条回显业务接口
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void findHeadlineByHid(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int hid = Integer.parseInt(req.getParameter("hid"));
+        NewsHeadline headline = headlineService.findByHid(hid);
+        Map<Object, Object> data = new HashMap<>();
+        data.put("headline", headline);
+        WebUtil.writeJson(resp, Result.ok(data));
+    }
+
+    /**
+     * 更新头条的业务接口
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        NewsHeadline newsHeadline = WebUtil.readJson(req, NewsHeadline.class);
+        headlineService.update(newsHeadline);
         WebUtil.writeJson(resp, Result.ok(null));
     }
 }
