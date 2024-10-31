@@ -65,4 +65,18 @@ public class NewsHeadlineController extends BaseController {
         headlineService.update(newsHeadline);
         WebUtil.writeJson(resp, Result.ok(null));
     }
+
+    /**
+     * 删除头条业务接口实现
+     *
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void removeByHid(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int hid = Integer.parseInt(req.getParameter("hid"));
+        headlineService.removeByHid(hid);
+        WebUtil.writeJson(resp, Result.ok(null));
+    }
 }

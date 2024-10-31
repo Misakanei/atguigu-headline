@@ -21,6 +21,8 @@ public interface NewsHeadLineDao {
     NewsHeadline findByHid(int hid);
 
     int update(NewsHeadline newsHeadline);
+
+    void removeByHid(int hid);
 }
 
 
